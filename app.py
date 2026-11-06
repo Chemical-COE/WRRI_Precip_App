@@ -80,5 +80,13 @@ fig.write_html('Precipitation Grouped by Day.html')
 st.plotly_chart(fig)
 
 st.info('Current data can be downloaded with by clicking the button below.')
-st.download_button(label = 'Click Here To Download Data', data = grouped_data)
+
+csv_data = grouped_data.to_csv(index=False).encode('utf-8')
+
+st.download_button(
+    label='Click Here To Download Data',
+    data=csv_data,
+    file_name='grouped_precipitation_data.csv',
+    mime='text/csv'
+)
 st.dataframe(grouped_data)
