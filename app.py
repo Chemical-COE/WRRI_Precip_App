@@ -20,6 +20,7 @@ fig = px.scatter(
     x='hr bucket',
     y='mm',
     labels={'hr bucket': 'Measurment Date', 'mm': 'Accumulated Rain (mm)'},
+    symbol='source',
     color = 'source',
     title = 'Precipitation Grouped by Hour'
 )
