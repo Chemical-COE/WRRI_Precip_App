@@ -25,7 +25,9 @@ fig = px.scatter(
     title = 'Precipitation Grouped by Hour'
 )
 
+fig.update_yaxes(range=[None, 30])
 fig.add_hline(y= 25.4, line_width=2, line_dash="dash", line_color="red")
+fig.update_traces(marker=dict(size=6, opacity=0.8))
 #fig.add_hline(y= 2*25.4, line_width=2, line_dash="dash", line_color="red")
 st.plotly_chart(fig)
 
@@ -65,7 +67,7 @@ fig = px.scatter(
     x='plot_date',
     y='mm',
     color='source',
-    symbol='source',  # Assigns a unique marker shape (circle, square, diamond, etc.) per source
+    symbol='source',  
     labels={'plot_date': 'Manual Rain Gauge Observation Date', 'mm': 'Accumulated Rain (mm)'},
     title='Precipitation Grouped by Day (Offset)'
 )
