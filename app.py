@@ -19,7 +19,7 @@ fig = px.scatter(
     daily,
     x='hr bucket',
     y='mm',
-    labels={'hr bucket': 'Measurment Date (Grouped by Hour)', 'mm': 'Accumulated Rain (mm)'},
+    labels={'hr bucket': 'Measurment Date', 'mm': 'Accumulated Rain (mm)'},
     color = 'source',
     title = 'Precipitation Grouped by Hour'
 )
@@ -65,7 +65,7 @@ fig = px.scatter(
     y='mm',
     color='source',
     symbol='source',  # Assigns a unique marker shape (circle, square, diamond, etc.) per source
-    labels={'plot_date': 'Manual Rain Gauge Observation Date (Grouped by Day)', 'mm': 'Accumulated Rain (mm)'},
+    labels={'plot_date': 'Manual Rain Gauge Observation Date', 'mm': 'Accumulated Rain (mm)'},
     title='Precipitation Grouped by Day (Offset)'
 )
 
