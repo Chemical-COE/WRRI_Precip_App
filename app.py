@@ -76,6 +76,7 @@ fig.add_hline(y=25.4, line_width=2, line_dash="dash", line_color="red")
 
 fig.update_yaxes(range=[None, 30])
 st.plotly_chart(fig)
+st.write('Results in the figure above reflect total accumulations at 09:00. They are off set by a few hours to prevent stacking of data points.')
 
 st.info('Current data can be downloaded by clicking the button below.')
 
