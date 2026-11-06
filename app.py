@@ -19,14 +19,13 @@ fig = px.scatter(
     daily,
     x='hr bucket',
     y='mm',
-    labels={'hr bucket': 'Mountain Time (Grouped by Hour)', 'mm': 'Accumulated Rain (mm)'},
+    labels={'hr bucket': 'Measurment Date (Grouped by Hour)', 'mm': 'Accumulated Rain (mm)'},
     color = 'source',
     title = 'Precipitation Grouped by Hour'
 )
 
 fig.add_hline(y= 25.4, line_width=2, line_dash="dash", line_color="red")
 #fig.add_hline(y= 2*25.4, line_width=2, line_dash="dash", line_color="red")
-fig.write_html('Precipitation Grouped by Hour.html')
 st.plotly_chart(fig)
 
 daily_grouped = grouped_data.groupby(['source', 'obs_date'], as_index=False)['mm'].sum()
@@ -66,7 +65,7 @@ fig = px.scatter(
     y='mm',
     color='source',
     symbol='source',  # Assigns a unique marker shape (circle, square, diamond, etc.) per source
-    labels={'plot_date': 'Manual Rain Gauge Observation Date', 'mm': 'Accumulated Rain (mm)'},
+    labels={'plot_date': 'Manual Rain Gauge Observation Date (Grouped by Day)', 'mm': 'Accumulated Rain (mm)'},
     title='Precipitation Grouped by Day (Offset)'
 )
 
@@ -76,7 +75,6 @@ fig.update_traces(marker=dict(size=6, opacity=0.8))
 fig.add_hline(y=25.4, line_width=2, line_dash="dash", line_color="red")
 
 fig.update_yaxes(range=[None, 30])
-fig.write_html('Precipitation Grouped by Day.html')
 st.plotly_chart(fig)
 
 st.info('Current data can be downloaded by clicking the button below.')
