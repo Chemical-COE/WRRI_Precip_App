@@ -59,7 +59,7 @@ fig = px.scatter(
     color='source',
     symbol='source',  # Assigns a unique marker shape (circle, square, diamond, etc.) per source
     labels={'plot_date': 'Manual Rain Gauge Observation Date', 'mm': 'Accumulated Rain (mm)'},
-    title='Precipitation Grouped by Day (Offset by Source)'
+    title='Precipitation Grouped by Day (Offset)'
 )
 
 fig.update_traces(marker=dict(size=6, opacity=0.8))
