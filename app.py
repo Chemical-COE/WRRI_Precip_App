@@ -4,7 +4,7 @@ import plotly.express as px
 
 st.title('Welcome to the WRRI Precipitation Agreeability App')
 st.info('This app is currently static.')
-st.write('Over the course of the next year please expect updates')
+st.write('Over the course of the next year please expect updates.')
 st.write('For more information reach out or requests to the author cfirkins@unm.edu')
 grouped_data = pd.read_csv('grouped_data.csv')
 
