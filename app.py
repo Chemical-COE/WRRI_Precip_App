@@ -6,10 +6,13 @@ st.title('Welcome to the WRRI Precipitation Agreeability App')
 st.info('This app is currently static.')
 st.write('Over the course of the next year please expect updates.')
 st.write('For more information reach out or requests to the author cfirkins@unm.edu')
-grouped_data = pd.read_csv('grouped_data.csv')
 
+@st.cache_data
+def read_data():
+    grouped_data = pd.read_csv('grouped_data.csv')
+    return grouped_data
+    
 daily = grouped_data.groupby(['source', 'hr bucket', 'day'], as_index = False)['mm'].sum()
-
 fig = px.scatter(
     daily,
     x='hr bucket',
@@ -73,3 +76,7 @@ fig.add_hline(y=25.4, line_width=2, line_dash="dash", line_color="red")
 fig.update_yaxes(range=[None, 30])
 fig.write_html('Precipitation Grouped by Day.html')
 st.plotly_chart(fig)
+
+st.info('Current data can be downloaded with by clicking the button below.')
+st.download_button(label = 'Click Here To Download Data', data = grouped_data)
+st.dataframe(grouped_data)
