@@ -11,6 +11,8 @@ st.write('For more information reach out or requests to the author cfirkins@unm.
 def read_data():
     grouped_data = pd.read_csv('grouped_data.csv')
     return grouped_data
+
+grouped_data = read_data()
     
 daily = grouped_data.groupby(['source', 'hr bucket', 'day'], as_index = False)['mm'].sum()
 fig = px.scatter(
