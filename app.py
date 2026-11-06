@@ -79,7 +79,7 @@ fig.update_yaxes(range=[None, 30])
 fig.write_html('Precipitation Grouped by Day.html')
 st.plotly_chart(fig)
 
-st.info('Current data can be downloaded with by clicking the button below.')
+st.info('Current data can be downloaded by clicking the button below.')
 
 csv_data = grouped_data.to_csv(index=False).encode('utf-8')
 
