@@ -14,19 +14,20 @@ def read_data():
 
 grouped_data = read_data().copy()
 
-grouped_data['mtn'] = pd.to_datetime(grouped_data['mtn'])
-# Note: make sure '%Y-%m-%d %H %M' matches your space-separated format intention
-grouped_data["day"] = grouped_data["mtn"].dt.strftime("%Y-%m-%d %H %M")
-grouped_data["day"] = pd.to_datetime(
-    grouped_data["day"], format="%Y-%m-%d %H %M"
+daily = grouped_data.groupby(['source', 'hr bucket', 'day'], as_index = False)['mm'].sum()
+fig = px.scatter(
+    daily,
+    x='hr bucket',
+    y='mm',
+    labels={'hr bucket': 'Measurment Date', 'mm': 'Accumulated Rain (mm)'},
+    symbol='source',
+    color = 'source',
+    title = 'Precipitation Grouped by Hour'
 )
 
-grouped_data["obs_date"] = pd.to_datetime(
-    grouped_data["obs_date"], format="%m/%d/%Y"
-)
-
-grouped_data['hr bucket'] = grouped_data['day'].astype(str) + ' ' + grouped_data['mtn'].dt.hour.astype(str)
-grouped_data['hr bucket'] = pd.to_datetime(grouped_data['hr bucket'], format = '%Y-%m-%d %H')
+fig.add_hline(y= 25.4, line_width=2, line_dash="dash", line_color="red")
+#fig.add_hline(y= 2*25.4, line_width=2, line_dash="dash", line_color="red")
+st.plotly_chart(fig)
 
 daily_grouped = grouped_data.groupby(['source', 'obs_date'], as_index=False)['mm'].sum()
 
@@ -37,7 +38,7 @@ full_date_range = pd.date_range(
     freq='D'
 )
 full_grid = pd.MultiIndex.from_product(
-    [all_sources, full_date_range],
+    [all_sources, full_date_range], 
     names=['source', 'obs_date']
 ).to_frame(index=False)
 
@@ -66,7 +67,7 @@ fig = px.scatter(
     color='source',
     symbol='source',  # Assigns a unique marker shape (circle, square, diamond, etc.) per source
     labels={'plot_date': 'Manual Rain Gauge Observation Date', 'mm': 'Accumulated Rain (mm)'},
-    title='Precipitation Grouped by Day (Offset by Source)'
+    title='Precipitation Grouped by Day (Offset)'
 )
 
 fig.update_traces(marker=dict(size=6, opacity=0.8))
@@ -76,20 +77,6 @@ fig.add_hline(y=25.4, line_width=2, line_dash="dash", line_color="red")
 
 fig.update_yaxes(range=[None, 30])
 st.plotly_chart(fig)
-
-daily = grouped_data.groupby(['source', 'hr bucket', 'day'], as_index = False)['mm'].sum()
-
-fig = px.scatter(
-    daily,
-    x='hr bucket',
-    y='mm',
-    labels={'hr bucket': 'Mountain Time', 'mm': 'Accumulated Rain (mm)'},
-    color = 'source',
-    symbol='source',
-    title = 'Precipitation Grouped by Hour'
-)
-st.plotly_chart(fig)
-
 st.write('Results in the figure above reflect total accumulations at 09:00. They are off set by a few hours to prevent stacking of data points.')
 
 st.info('Current data can be downloaded by clicking the button below.')
