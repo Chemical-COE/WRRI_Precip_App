@@ -12,7 +12,7 @@ def read_data():
     data = pd.read_csv('grouped_data.csv')
     return data
 
-grouped_data = read_data()
+grouped_data = read_data().copy()
 
 grouped_data['mtn'] = pd.to_datetime(grouped_data['mtn'])
 grouped_data = grouped_data[grouped_data['mtn'] >= grouped_data['mtn'].iloc[0]]
