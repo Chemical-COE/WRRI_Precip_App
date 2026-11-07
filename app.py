@@ -14,7 +14,7 @@ def read_data():
 
 grouped_data = read_data()
     
-daily = grouped_data.groupby(['source', 'hr bucket', 'day'], as_index = False)['mm'].sum()
+daily = grouped_data.groupby(['source', 'hr bucket', 'day', 'mtn'], as_index = False)['mm'].sum()
 fig = px.scatter(
     daily,
     x='hr bucket',
