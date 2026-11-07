@@ -15,10 +15,15 @@ def read_data():
 grouped_data = read_data().copy()
 
 grouped_data['mtn'] = pd.to_datetime(grouped_data['mtn'])
-grouped_data = grouped_data[grouped_data['mtn'] >= grouped_data['mtn'].iloc[0]]
-grouped_data['day'] = grouped_data['mtn'].dt.strftime('%Y-%m-%d')
-grouped_data['day'] = pd.to_datetime(grouped_data['day'],format = '%Y-%m-%d')
-grouped_data['obs_date'] = pd.to_datetime(grouped_data['obs_date'],format = '%m/%d/%Y')
+# Note: make sure '%Y-%m-%d %H %M' matches your space-separated format intention
+grouped_data["day"] = grouped_data["mtn"].dt.strftime("%Y-%m-%d %H %M")
+grouped_data["day"] = pd.to_datetime(
+    grouped_data["day"], format="%Y-%m-%d %H %M"
+)
+
+grouped_data["obs_date"] = pd.to_datetime(
+    grouped_data["obs_date"], format="%m/%d/%Y"
+)
 
 grouped_data['hr bucket'] = grouped_data['day'].astype(str) + ' ' + grouped_data['mtn'].dt.hour.astype(str)
 grouped_data['hr bucket'] = pd.to_datetime(grouped_data['hr bucket'], format = '%Y-%m-%d %H')
