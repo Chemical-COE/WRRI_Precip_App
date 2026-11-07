@@ -13,23 +13,6 @@ def read_data():
     return grouped_data
 
 grouped_data = read_data()
-    
-daily = grouped_data.groupby(['source', 'hr bucket', 'day', 'mtn'], as_index = False)['mm'].sum()
-fig = px.scatter(
-    daily,
-    x='hr bucket',
-    y='mm',
-    labels={'hr bucket': 'Measurment Date', 'mm': 'Accumulated Rain (mm)'},
-    symbol='source',
-    color = 'source',
-    title = 'Precipitation Grouped by Hour'
-)
-
-fig.update_yaxes(range=[None, 30])
-fig.add_hline(y= 25.4, line_width=2, line_dash="dash", line_color="red")
-fig.update_traces(marker=dict(size=6, opacity=0.8))
-#fig.add_hline(y= 2*25.4, line_width=2, line_dash="dash", line_color="red")
-st.plotly_chart(fig)
 
 daily_grouped = grouped_data.groupby(['source', 'obs_date'], as_index=False)['mm'].sum()
 
@@ -40,7 +23,7 @@ full_date_range = pd.date_range(
     freq='D'
 )
 full_grid = pd.MultiIndex.from_product(
-    [all_sources, full_date_range], 
+    [all_sources, full_date_range],
     names=['source', 'obs_date']
 ).to_frame(index=False)
 
@@ -67,9 +50,9 @@ fig = px.scatter(
     x='plot_date',
     y='mm',
     color='source',
-    symbol='source',  
+    symbol='source',  # Assigns a unique marker shape (circle, square, diamond, etc.) per source
     labels={'plot_date': 'Manual Rain Gauge Observation Date', 'mm': 'Accumulated Rain (mm)'},
-    title='Precipitation Grouped by Day (Offset)'
+    title='Precipitation Grouped by Day (Offset by Source)'
 )
 
 fig.update_traces(marker=dict(size=6, opacity=0.8))
@@ -79,6 +62,18 @@ fig.add_hline(y=25.4, line_width=2, line_dash="dash", line_color="red")
 
 fig.update_yaxes(range=[None, 30])
 st.plotly_chart(fig)
+
+daily = grouped_data.groupby(['source', 'hr bucket', 'day'], as_index = False)['mm'].sum()
+
+fig = px.scatter(
+    daily,
+    x='hr bucket',
+    y='mm',
+    labels={'hr bucket': 'Mountain Time', 'mm': 'Accumulated Rain (mm)'},
+    color = 'source',
+    symbol='source',
+    title = 'Precipitation Grouped by Hour'
+)
 st.write('Results in the figure above reflect total accumulations at 09:00. They are off set by a few hours to prevent stacking of data points.')
 
 st.info('Current data can be downloaded by clicking the button below.')
