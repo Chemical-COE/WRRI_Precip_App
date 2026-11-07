@@ -9,8 +9,8 @@ st.write('For more information reach out or requests to the author cfirkins@unm.
 
 @st.cache_data
 def read_data():
-    grouped_data = pd.read_csv('grouped_data.csv')
-    return grouped_data
+    data = pd.read_csv('grouped_data.csv')
+    return data
 
 grouped_data = read_data()
 
