@@ -4,8 +4,8 @@ import plotly.express as px
 
 st.title('Welcome to the WRRI Precipitation Agreeability App')
 st.info('This app is currently static.')
-st.write('Over the course of the next year please expect updates.')
-st.write('For more information reach out or requests to the author cfirkins@unm.edu')
+st.write('Please expect updates over the course of the next year.')
+st.write('For more information reach out or make requests to the author: cfirkins@unm.edu')
 
 @st.cache_data
 def read_data():
@@ -27,6 +27,8 @@ fig = px.scatter(
 
 fig.add_hline(y= 25.4, line_width=2, line_dash="dash", line_color="red")
 #fig.add_hline(y= 2*25.4, line_width=2, line_dash="dash", line_color="red")
+
+fig.update_yaxes(range=[None, 30])
 st.plotly_chart(fig)
 
 daily_grouped = grouped_data.groupby(['source', 'obs_date'], as_index=False)['mm'].sum()
