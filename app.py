@@ -14,6 +14,15 @@ def read_data():
 
 grouped_data = read_data()
 
+grouped_data['mtn'] = pd.to_datetime(grouped_data['mtn'])
+grouped_data = grouped_data[grouped_data['mtn'] >= grouped_data['mtn'].iloc[0]]
+grouped_data['day'] = grouped_data['mtn'].dt.strftime('%Y-%m-%d')
+grouped_data['day'] = pd.to_datetime(grouped_data['day'],format = '%Y-%m-%d')
+grouped_data['obs_date'] = pd.to_datetime(grouped_data['obs_date'],format = '%m/%d/%Y')
+
+grouped_data['hr bucket'] = grouped_data['day'].astype(str) + ' ' + grouped_data['mtn'].dt.hour.astype(str)
+grouped_data['hr bucket'] = pd.to_datetime(grouped_data['hr bucket'], format = '%Y-%m-%d %H')
+
 daily_grouped = grouped_data.groupby(['source', 'obs_date'], as_index=False)['mm'].sum()
 
 all_sources = daily_grouped['source'].unique()
@@ -74,6 +83,8 @@ fig = px.scatter(
     symbol='source',
     title = 'Precipitation Grouped by Hour'
 )
+st.plotly_chart(fig)
+
 st.write('Results in the figure above reflect total accumulations at 09:00. They are off set by a few hours to prevent stacking of data points.')
 
 st.info('Current data can be downloaded by clicking the button below.')
